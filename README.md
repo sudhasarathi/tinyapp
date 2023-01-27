@@ -4,9 +4,10 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 ## Final Product
 
-!["screenshot description"](#)
-URL_HOme.png.png
-!["screenshot description"](#)
+!["Home page"](#)
+https://github.com/sudhasarathi/tinyapp/blob/main/DOCS/URL_HOme.png.png
+!["URL_HOme.png.png"](#)
+https://github.com/sudhasarathi/tinyapp/blob/main/DOCS/URL_Login.png.png
 
 ## Dependencies
 
@@ -15,6 +16,8 @@ URL_HOme.png.png
 - EJS
 - bcryptjs
 - cookie-session
+- mocha (for tests)
+- chai (for tests)
 
 ## Getting Started
 
