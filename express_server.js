@@ -61,11 +61,12 @@ app.get("/urls", (req, res) => {
     user: users[req.cookies["userId"]],
     urls: urlsForUser(req.cookies["userId"])
   };
-  if (templateVars.user) {
-    res.render("urls_index", templateVars);
-  } else {
-    res.status(400).send("You need to login or register to access this page");
-  }
+  // if (templateVars.user) {
+  //   res.render("urls_index", templateVars);
+  // } else {
+  //   res.status(400).send("You need to login or register to access this page");
+  // }
+  res.render("urls_index", templateVars);
 });
 app.get("/urls/new", (req, res) => {
   let templateVars = { user: users[req.cookies["userId"]] };
@@ -93,9 +94,9 @@ app.get("/urls/:id", (req, res) => {
     user: users[req.cookies["userId"]],
     id: req.params.id, 
     longURL: urlDatabase[req.params.id].longURL };
-    if (!templateVars.user) {
-      res.status(400).send("You need to register or login to access this page");
-    }
+    // if (!templateVars.user) {
+    //   res.status(400).send("You need to register or login to access this page");
+    // }
     if (req.cookies["userId"] === urlDatabase[templateVars.id].userID) {
       res.render("urls_show", templateVars);
     } else {
