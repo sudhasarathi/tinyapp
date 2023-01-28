@@ -52,6 +52,7 @@ const urlsForUser = (id) => {
   return filtered;
 };
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use(cookieSession({
   name: 'session',
   keys: ['sudha'],
