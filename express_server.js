@@ -98,6 +98,9 @@ app.post("/urls", (req, res) => {
   // console.log(req.body); // Log the POST request body to the console
   const longURL = req.body.longURL;
   const userID = req.session.userId;
+  if (!userID){
+    return res.send("<p>You are not loggedIn</p>")
+  }
   const shortURL = generateRandomString();
   urlDatabase[shortURL] = { longURL, userID };
   res.redirect(`/urls/${shortURL}`); // Respond with 'Ok' (we will replace this)
@@ -133,10 +136,10 @@ app.get("/u/:id", (req, res) => {
 
 // URLS/id Delete
 // post handler for delete
-app.delete("/urls/:id/delete", (req,res) => {
+app.post("/urls/:id/delete", (req,res) => {
   const shortURL = req.params.id;
   if (req.session.userId === urlDatabase[shortURL].userID) {
-    delete urlDatabase[req.params.id];
+    delete urlDatabase[shortURL];
     res.redirect("/urls");
   } else {
     res.status(400).send("You are not allowed to delete that TinyURL!");
@@ -148,7 +151,7 @@ app.post("/urls/:id", (req, res) => {
   console.log(urlDatabase);
   if (req.session.userId === urlDatabase[shortURL].userID) {
     urlDatabase[shortURL].longURL = longURL;
-    res.redirect(`/urls/${shortURL}`);
+    res.redirect(`/urls`);
   } else {
     res.status(400).send("Your are not allowed to edit that TinyURL!");
   }
@@ -198,7 +201,7 @@ app.get("/register", (req,res) => {
 app.post("/register", (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    let templateVars = {
+    const templateVars = {
       status: 401,
       message: 'Email and/or password missing',
       user: users[req.session.userId]
@@ -207,7 +210,7 @@ app.post("/register", (req, res) => {
     res.render("urls_error", templateVars);
     ('Email and/or password is missing');
   } else if (findUser(email, users)) {
-    let templateVars = {
+    const templateVars = {
       status: 409,
       message: 'This email has already been registered',
       user: users[req.session.userId]
